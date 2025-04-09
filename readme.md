@@ -16,7 +16,8 @@ Clone this github repository
 
 Step 1:
 ```
-conda create -n animea python=3.10.19\6
+conda create -n animea python=3.10
+cd finalYearProject
 pip install -r requirements.txt
 ```
 
