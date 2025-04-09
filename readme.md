@@ -12,7 +12,7 @@ del .\miniconda.exe
 
 Clone this github repository
 
-```git clone <url>```
+```git clone https://github.com/Anuj-Dube/finalYearProject.git```
 
 Step 1:
 ```
