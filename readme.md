@@ -14,19 +14,11 @@ Clone this github repository
 
 ```git clone https://github.com/Anuj-Dube/finalYearProject.git```
 
-Step 1:
+Setup the enviornment and run the application:
 ```
 conda create -n animea python=3.10
+conda activate animea
 cd finalYearProject
 pip install -r requirements.txt
-```
-
-step 2:
-```
-conda activate animea
-```
-
-step 3:
-```
 streamlit run main.py
 ```
