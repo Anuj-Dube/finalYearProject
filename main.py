@@ -49,7 +49,7 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 if uploaded_file is not None:
     # Convert image to RGB immediately to avoid 4-channel issues
     img = Image.open(uploaded_file).convert("RGB")
-    st.image(img, caption="Uploaded Image", use_column_width=True)
+    st.image(img, caption="Uploaded Image", use_container_width=True)
     with st.spinner("Predicting..."):
         preds = predict_anemia(img, feature_extractor, model)
         st.success(f"✅ Prediction: {preds}")
