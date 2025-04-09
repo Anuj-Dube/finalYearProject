@@ -9,9 +9,21 @@ import pickle
 import xgboost as xgb
 from PIL import Image
 import cv2
-
+import pandas as pd
 # Load the trained XGBoost model using pickle
 model = pickle.load(open('model.pkl', 'rb'))
+# Load the trained model and encoder
+hemoModel = pickle.load(open('finalized_model.pkl', 'rb'))
+
+# Load your dataset to get column names
+df = pd.read_csv('data.csv')
+x = df.drop(columns=['Diagnosis'])
+feature_names = x.columns.tolist()
+
+# Load the label encoder
+from sklearn.preprocessing import LabelEncoder
+label_encoder = LabelEncoder()
+label_encoder.fit(df['Diagnosis'])  # Fit it on original labels
 
 # Define the function to predict anemia
 def predict_anemia(img_pil, feature_extractor, model, image_size=(224, 224)):
@@ -53,3 +65,19 @@ if uploaded_file is not None:
     with st.spinner("Predicting..."):
         preds = predict_anemia(img, feature_extractor, model)
         st.success(f"✅ Prediction: {preds}")
+
+
+# Streamlit app
+st.title("🩸 Anemia Type Predictor")
+st.write("Enter the CBC values below to predict the anemia diagnosis:")
+
+user_input = []
+for feature in feature_names:
+    value = st.number_input(f"{feature}", value=0.0, format="%.4f")
+    user_input.append(value)
+
+if st.button("Predict"):
+    input_array = np.array(user_input).reshape(1, -1)
+    predicted_class = hemoModel.predict(input_array)
+    predicted_label = label_encoder.inverse_transform(predicted_class)
+    st.success(f"🩺 Predicted Diagnosis: **{predicted_label[0]}**")
